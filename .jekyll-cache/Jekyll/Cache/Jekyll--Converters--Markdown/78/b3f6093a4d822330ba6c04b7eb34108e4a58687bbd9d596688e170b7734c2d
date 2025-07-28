@@ -1,0 +1,166 @@
+I"r<style>
+.logo-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+.logo-row img {
+  height: 160px;
+}
+</style>
+
+<!-- _class: lead -->
+<h1 id="dissecting-dll-with-static-and-dynamic-analysis">Dissecting DLL with Static and Dynamic Analysis</h1>
+<p>Shreethaar Arunagirinathan
+@0x251e</p>
+
+<div class="logo-row">
+  <img src="logo.png" />
+  <img src="logo2.png" />
+  <img src="logo3.png" />
+</div>
+
+<hr />
+
+<h3 id="whoami">./whoami</h3>
+
+<ul>
+  <li>Shreethaar Arunagirinathan</li>
+  <li>Computer Science @ UUM</li>
+  <li>MCC 2024 Alumni</li>
+  <li>CTFs @ RE:UN10N
+    <ul>
+      <li>DFIR</li>
+      <li>RE</li>
+      <li>OSINT</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="0x251e.png" alt="bg right:45%" /></p>
+
+<hr />
+
+<h3 id="case_study">./case_study</h3>
+
+<style>
+div.twocols {
+  margin-top: 35px;
+  column-count: 2;
+  font-size: 0.65em;
+}
+div.twocols p:first-child,
+div.twocols h1:first-child,
+div.twocols h2:first-child,
+div.twocols ul:first-child,
+div.twocols ul li:first-child,
+div.twocols ul li p:first-child {
+  margin-top: 0 !important;
+}
+div.twocols p.break {
+  break-before: column;
+  margin-top: 0;
+}
+div.twocols ul li {
+  font-size: 0.85em;
+  line-height: 1.5;
+  margin-bottom: 0.4em;
+}
+.reference {
+  font-size: 0.7em;
+  color: #cccccc;
+  margin-top: 10px;
+  text-align: center;
+}
+</style>
+
+<div class="twocols">
+
+- **Target:** WinSCP users (430K searches/3 months) via fake Google Ads
+- User downloads `WinSCP_v.6.1.zip` → runs `setup.exe`
+- Appears legitimate: setup.exe = signed pythonw.exe ✅
+- Hidden threat: python311.dll = MALICIOUS ❌
+
+**The Deception**
+- Traditional analysis: "Legitimate signed binary = safe"
+- Reality: Malicious DLL sideloaded by legitimate process
+- Full system compromise through DLL hijacking
+- Persistence via scheduled tasks + more DLL chains
+
+<p class="break"></p>
+
+![right height:400px](https://www.iaesjournal.com/wp-content/uploads/2023/11/hacking.webp)
+
+<p class="reference">References: <a href="https://www.iaesjournal.com/4980-2/">https://www.iaesjournal.com/4980-2/</a></p>
+</div>
+
+<hr />
+
+<h3 id="why_reversing_dll_matters">./why_reversing_dll_matters</h3>
+<ul>
+  <li>Modern malware uses DLL to employ various tactics
+    <ul>
+      <li><a href="https://attack.mitre.org/techniques/T1574/001/">MITRE ATT&amp;CK Hijack Execution Flow: DLL</a></li>
+    </ul>
+  </li>
+  <li>Common in reflecive and process injections</li>
+  <li>More stealthy behavior and modular payloads</li>
+  <li>DLL is one of the top 5 file types listed in MalwareBazaar</li>
+  <li>Vulnerabilities analysis that lead to supply chain risks</li>
+  <li>Understand how applications interacts with external libraries</li>
+</ul>
+
+<hr />
+
+<h3 id="what_is_dll">./what_is_dll</h3>
+<style>
+section ul {
+    font-size: 0.75em !important;
+    line-height: 1.4;
+}
+section ul li {
+    margin-bottom: 0.3em;
+}
+</style>
+
+<ul>
+  <li>DLL (Dynamic Link Library) contains code and data which used by more than one program at the same time</li>
+  <li>Contains <strong>exported functions</strong> to be called by other modules</li>
+  <li>Any process that uses Windows API uses dynamic linking:
+    <ul>
+      <li>Comdlg32 DLL use for dialog box related functions (GetOpenFileName, GetSaveFileName)</li>
+    </ul>
+  </li>
+  <li>Dynamic linking allows a module to include only the information needed to locate an exported DLL function at loadtime or runtime</li>
+  <li>Benefits of using DLL:
+    <ul>
+      <li>Reduce memory and disk usage as duplication of code is reduced</li>
+      <li>Promotes modular architecture, eases deployment and installation</li>
+    </ul>
+  </li>
+  <li>Security Matters with DLL:
+    <ul>
+      <li>Code sharing: Multiple applications can use the same DLL</li>
+      <li>Runtime Loading: DLLs loaded when needed (attack opportunity)</li>
+      <li>
+        <h2 id="modularity-can-be-replaced-or-hijacked-without-changing-main-executable">Modularity: Can be replaced or hijacked without changing main executable</h2>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="how_dll_works">./how_dll_works</h3>
+
+<hr />
+
+<h3 id="create_simple_dll">./create_simple_dll</h3>
+
+<hr />
+
+<h3 id="structure_of_dll">./structure_of_dll</h3>
+
+<hr />
+
+:ET

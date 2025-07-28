@@ -1,0 +1,327 @@
+body {
+    background-color: #101010;
+}
+
+@font-face {
+    font-family: 'Ubuntu Regular';
+    src: url('../assets/Ubuntu-Regular.ttf') format('truetype');
+}
+
+
+.slide-container {
+    font-family: 'Ubuntu Regular', sans-serif;
+    text-align: center;
+    color: white;
+}
+
+.slide {}
+
+.avatar-container {
+    position: relative;
+    animation-name: avatar-fade-in-animation;
+    animation-duration: 4s;
+    animation-timing-function: ease-out;
+}
+
+.avatar-container>img {
+    width: 250px;
+    margin: 25px;
+}
+
+@keyframes avatar-fade-in-animation {
+    from {
+        opacity: 0;
+        top: -50px;
+    }
+
+    to {
+        opacity: 1;
+        top: 0px;
+    }
+}
+
+.title-container {
+    position: relative;
+    animation-name: title-fade-in-animation;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes title-fade-in-animation {
+    from {
+        opacity: 0;
+        top: 50px;
+    }
+
+    to {
+        opacity: 1;
+        top: 0px;
+    }
+}
+
+.links-container {
+    display: table;
+    margin: 0 auto;
+}
+
+.links-container>ul {
+    width: 100%;
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+}
+
+.links-container>ul>li {
+    position: relative;
+    opacity: 0;
+    display: inline-block;
+    float: none;
+    padding: 10px;
+    animation-name: link-fade-in-animation;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.links-container-main>ul>li {
+    width: 130px;
+}
+
+.links-container>ul>li:nth-of-type(1) {
+    animation-delay: 2.4s;
+}
+
+.links-container>ul>li:nth-of-type(2) {
+    animation-delay: 2.5s;
+}
+
+.links-container>ul>li:nth-of-type(3) {
+    animation-delay: 2.6s;
+}
+
+.links-container>ul>li:nth-of-type(4) {
+    animation-delay: 2.7s;
+}
+
+.links-container>ul>li:nth-of-type(5) {
+    animation-delay: 2.8s;
+}
+
+.links-container>ul>li:nth-of-type(6) {
+    animation-delay: 2.9s;
+}
+
+@keyframes link-fade-in-animation {
+    from {
+        opacity: 0;
+        top: 50px;
+    }
+
+    to {
+        opacity: 1;
+        top: 0px;
+    }
+}
+
+.projects-container>hr {
+    opacity: 0;
+    width:20px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    color: #303030;
+    animation-name: projects-fade-in-animation;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 3s;
+}
+
+.projects-container>h3 {
+    opacity: 0;
+    animation-name: projects-fade-in-animation;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 3.5s;
+}
+
+.projects-container>ul{
+    list-style: none;
+    padding-left: 0;
+}
+
+.projects-container>ul>li {
+    position: relative;
+    opacity: 0;
+    animation-name: projects-fade-in-animation;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.projects-container>ul>li:nth-of-type(1) {
+    animation-delay: 3.6s;
+}
+
+.projects-container>ul>li:nth-of-type(2) {
+    animation-delay: 3.7s;
+}
+
+.projects-container>ul>li:nth-of-type(3) {
+    animation-delay: 3.8s;
+}
+
+.projects-container>ul>li:nth-of-type(4) {
+    animation-delay: 3.9s;
+}
+
+.projects-container>ul>li:nth-of-type(5) {
+    animation-delay: 4.0s;
+}
+
+.projects-container>ul>li:nth-of-type(6) {
+    animation-delay: 4.1s;
+}
+
+.projects-container>ul>li:nth-of-type(7) {
+    animation-delay: 4.2s;
+}
+
+@keyframes projects-fade-in-animation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+a.social {
+    font-size:14pt;
+    color: #aaa;
+    text-decoration: none;
+}
+
+a.social:link {
+    color: #aaa;
+    text-decoration: none;
+}
+
+a.social:visited {
+    color: #aaa;
+    text-decoration: none;
+}
+
+a.social:hover {
+    color: white;
+    text-decoration: none;
+    transform: scale(1.1);
+    transition: linear 0.1s;
+}
+
+a.social:active {
+    color: white;
+    text-decoration: none;
+}
+
+a.project {
+    font-size:10pt;
+    color: #aaa;
+    text-decoration: underline;
+}
+
+a.project:link {
+    color: #aaa;
+    text-decoration: underline;
+}
+
+a.project:visited {
+    color: #aaa;
+    text-decoration: underline;
+}
+
+a.project:hover {
+    color: white;
+    text-decoration: underline;
+    transition: linear 0.1s;
+}
+
+a.project:active {
+    color: white;
+    text-decoration: underline;
+}
+
+a.button {
+    font-weight: bold;
+    padding: 10px;
+    display: block;
+    background-color: #080808;
+    border-radius: 7px;
+    border-color: #222;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: black 0px 3px;
+}
+
+a.button:link {
+    color: white;
+    text-decoration: none;
+}
+
+a.button:visited {
+    color: white;
+    text-decoration: none;
+}
+
+a.button:hover {
+    background-color: #151515;
+    color: white;
+    text-decoration: none;
+    transform: scale(1.1);
+    transition: linear 0.1s;
+}
+
+a.button:active {
+    color: white;
+    text-decoration: none;
+}
+
+.tooltip {
+    z-index: 100;
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    /* visibility: hidden; */
+    width: 120px;
+    background-color: #080808;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 175%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    box-shadow: black 0px 3px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #080808 transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    opacity: 1;
+    transition: linear 0.1s;
+}
