@@ -52,7 +52,7 @@ Shreethaar Arunagirinathan
 div.twocols {
   margin-top: 35px;
   column-count: 2;
-  font-size: 0.65em;
+  font-size: 0.75em;
 }
 div.twocols p:first-child,
 div.twocols h1:first-child,
@@ -110,6 +110,8 @@ div.twocols ul li {
 - Vulnerabilities analysis that lead to supply chain risks
 - Understand how applications interacts with external libraries
 
+Add an image of a chart from MalwareBazaar -> right side
+
 ---
 
 ### ./what_is_dll
@@ -139,6 +141,18 @@ section ul li {
 
 ### ./how_dll_works
 
+Before understanding the working of DLL, understand the difference between static and dynamic linking:
+
+- If **static linking** is used, the linker copies the **object code** from the library directly into the final executable. This results in a larger binary that is self-contained
+- If **dynamic linking** is used, the linker does not copy the object code. Instead, it inserts **references (or stubs)** pointing to the external library (e.g., a DLL). 
+
+In windows the file extensions are as follows: Static libraries (.lib) and dynamic libraries (.dll). The main difference is that static libraries are linked to the executable at compile time; whereas dynamic linked libraries are not linked until run-time.
+
+---
+
+### ./how_dll_works
+
+[Static vs Dynamic Linking](https://excalidraw.com/#json=dnx_6hrE22l7_vI3D01Wh,N-eEl0y3luJclGzbXyOn4g)
 
 
 ---
