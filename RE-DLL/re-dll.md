@@ -154,17 +154,88 @@ In windows the file extensions are as follows: Static libraries (.lib) and dynam
 
 [Static vs Dynamic Linking](https://excalidraw.com/#json=dnx_6hrE22l7_vI3D01Wh,N-eEl0y3luJclGzbXyOn4g)
 
+[DLL Loading with Relative Addressing](https://excalidraw.com/#json=QSX9FTBqKW-Dk-h8LkWFW,12_4MgVhg96fA_Oo0sP99Q)
 
 ---
 
 ### ./create_simple_dll 
+```c 
+// simple-dll.dll
+#include <windows.h>
 
+/* Export a very small function */
+__declspec(dllexport) int add(int a, int b) {
+    return a + b;
+}
+// DllMain as entrypoint 
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+    switch (fdwReason) {        // perform actions based on the reason of calling 
+    case DLL_PROCESS_ATTACH:    // initialize once for each new process
+        break;
 
+    case DLL_THREAD_ATTACH:     // do thread-specific initialization
+        break;
+
+    case DLL_THREAD_DETACH:     // do thread-specific cleanup
+        break;
+
+    case DLL_PROCESS_DETACH:    // do not do cleanup if process termination scenario
+        break;
+    }
+    return TRUE;
+}
+```
+---
+
+### ./create_simple_dll
+```c 
+// simple-loader.c
+#include <windows.h>
+#include <stdio.h>
+
+typedef int (*add_func_t)(int, int);
+
+int main(void) {
+    const char* dllName = "simple-dl.dll"; /* the DLL filename */
+
+    HMODULE h = LoadLibraryA(dllName);
+    if (!h) {
+        DWORD err = GetLastError();
+        printf("LoadLibraryA failed (error %lu). Make sure %s is in the same folder.\n", err, dllName);
+        return 1;
+    }
+
+    /* Get address of exported function "add" */
+    add_func_t add = (add_func_t)GetProcAddress(h, "add");
+    if (!add) {
+        DWORD err = GetLastError();
+        printf("GetProcAddress failed (error %lu).\n", err);
+        FreeLibrary(h);
+        return 1;
+    }
+
+    /* Call it */
+    int a = 7, b = 5;
+    int result = add(a, b);
+    printf("add(%d, %d) = %d\n", a, b, result);
+
+    /* Done */
+    FreeLibrary(h);
+    return 0;
+}
+```
 ---
 
 ### ./structure_of_dll
 
+##### DLL File Structure Overview
+1. DOS Stub - Legacy DOS compatibility header 
+2. PE Signature - "PE\0\0" magic Signature
+3. COFF File Header - Machine type, number of sections, characteristics
+4. Optional Header - Magic number, entry point, base address, RVA 
+5. Section Headers - Sections names, virtual address, offset
 
 ---
+
 
 
