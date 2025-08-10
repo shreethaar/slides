@@ -104,7 +104,7 @@ div.twocols ul li {
 ### ./why_reversing_dll_matters
 - Modern malware uses DLL to employ various tactics
     - [MITRE ATT&CK Hijack Execution Flow: DLL](https://attack.mitre.org/techniques/T1574/001/)
-- Common in reflecive and process injections
+- Common in reflective and process injections
 - More stealthy behavior and modular payloads
 - DLL is one of the top 5 file types listed in MalwareBazaar 
 - Vulnerabilities analysis that lead to supply chain risks
@@ -237,5 +237,43 @@ int main(void) {
 
 ---
 
+### ./structure_of_dll
+
+1. View COFF headers 
+```cmd 
+dumpbin /headers simple-dll.dll
+```
+
+2. Examine code sections
+```cmd
+dumpbin /rawdata /section:.text simple-dll.dll
+dumpbin /disasm /section:.text simple-dll.dll
+```
+
+3. Export information 
+```cmd 
+dumpbin /exports simple-dll.dll 
+```
+---
+
+### ./structure_of_dll
+
+4. View dependecies 
+```cmd 
+dumpbin /dependents loader.exe 
+```
+
+5. View imports 
+```cmd
+dumpbin /imports loader.exe
+```
+---
+
+### ./static_analysis_dll 
 
 
+---
+
+### ./dynamic_analysis_dll
+
+---
