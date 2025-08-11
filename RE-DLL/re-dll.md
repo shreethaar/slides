@@ -32,6 +32,7 @@ Shreethaar Arunagirinathan
 
 ---
 
+
 ### ./whoami
 
 - Shreethaar Arunagirinathan 
@@ -44,6 +45,19 @@ Shreethaar Arunagirinathan
 
 ![bg right:45%](0x251e.png)
 
+---
+
+### ./toc 
+
+1. Case study of SEO#LURKER campaign
+2. Why reversing DLL matters 
+3. What is DLL 
+4. How DLL works 
+5. Create simple DLL 
+6. Structure of DLL 
+7. Static Analysis of DLL (IDA btw) 
+8. Dyanmic Analysis of DLL (x32dbg btw) 
+9. CTF Challenge review (bbctf btw) 
 ---
 
 ### ./case_study
@@ -102,15 +116,28 @@ div.twocols ul li {
 ---
 
 ### ./why_reversing_dll_matters
-- Modern malware uses DLL to employ various tactics
-    - [MITRE ATT&CK Hijack Execution Flow: DLL](https://attack.mitre.org/techniques/T1574/001/)
-- Common in reflective and process injections
-- More stealthy behavior and modular payloads
-- DLL is one of the top 5 file types listed in MalwareBazaar 
-- Vulnerabilities analysis that lead to supply chain risks
-- Understand how applications interacts with external libraries
 
-Add an image of a chart from MalwareBazaar -> right side
+<table>
+<tr>
+<td width="60%" valign="top">
+
+- Modern malware uses DLL to employ various tactics  
+    - [MITRE ATT&CK Hijack Execution Flow: DLL](https://attack.mitre.org/techniques/T1574/001/)  
+- Common in reflective and process injections  
+- More stealthy behavior and modular payloads  
+- DLL is one of the top 5 file types listed in MalwareBazaar  
+- Vulnerabilities analysis that lead to supply chain risks  
+- Understand how applications interacts with external libraries  
+
+</td>
+<td width="60%" valign="top">
+
+<img src="malwarebazaar.png" width="100%">
+<img src="supplychainattack.png" width="100%">
+
+</td>
+</tr>
+</table>
 
 ---
 
