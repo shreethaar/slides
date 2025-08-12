@@ -191,34 +191,32 @@ In windows the file extensions are as follows: Static libraries (.lib) and dynam
 ```c
 // simple-dll.c
 #include <windows.h>
-
 /* Export a very small function */
 __declspec(dllexport) int add(int a, int b) {
-    return a+b;
+    return a + b;
 }
-__declspec(dllexport) char* getString() {
-    static char buffer[] = "Hello from DLL";
-    return buffer;
+__declspec(dllexport) void getString() {
+    MessageBoxA(NULL,"Hello from DLL","Weee MessageBox",MB_OK)
 }
 __declspec(dllexport) void processData(char* input, int length) {
-    for(int i=0;i<length;i++) {
-        input[i]^=0x42;
+    for (int i = 0; i < length; i++) {
+        input[i] ^= 0x6F;
     }
 }
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
     switch (fdwReason) {        // perform actions based on the reason of calling 
-        case DLL_PROCESS_ATTACH:    // initialize once for each new process
-            OutputDebugStringA("DLL Loaded\n");
-            break;
-        case DLL_THREAD_ATTACH:     // do thread-specific initialization
-            break;
-        case DLL_THREAD_DETACH:     // do thread-specific cleanup
-            break;
-        case DLL_PROCESS_DETACH:    // do not do cleanup if process termination scenario
-        OutputDebugStringA("DLL Unloaded\n");
-            break;
-        }
-        return TRUE;
+    case DLL_PROCESS_ATTACH:    // initialize once for each new process
+        MessageBoxA(NULL, "DLL Loaded", "DLL Event", MB_OK | MB_ICONINFORMATION);
+        break;
+    case DLL_THREAD_ATTACH:     // do thread-specific initialization
+        break;
+    case DLL_THREAD_DETACH:     // do thread-specific cleanup
+        break;
+    case DLL_PROCESS_DETACH:    // do not do cleanup if process termination scenario
+        MessageBoxA(NULL, "DLL Unloaded", "DLL Event", MB_OK | MB_ICONINFORMATION);
+        break;
+    }
+    return TRUE;
 }
 ```
 ---
@@ -313,9 +311,59 @@ dumpbin /imports loader.exe
 
 ### ./static_analysis_dll 
 
+![static1](static1.png)
+
+---
+
+### ./static_analysis_dll 
+
+![static2](static2.png)
+
+---
+
+### ./static_analysis_dll
+
+![static3](static3.png)
+
 ---
 
 ### ./dynamic_analysis_dll
+
+We will be using the simple-loader.exe to debug the dll. 
+Yes, it is possible to use rundll32 to debug but the limitations are:
+- simple-dll.dll exported functions required arguments to be passed 
+- rundll32 expect a callback function from DLL
+```c 
+__declspec(dllexport) void CALLBACK CustomFunc(HWND hwnd, HINSTANCE hinst, LPSTR cmdLine, int nCmdShow);
+```
+- Calling convention of CALLBACK(__stdcall) with a return type of void
+- Is best use with Windows system DLL functions, like WinAPI 
+
+---
+
+### ./dynamic_analysis_dll
+
+![dynamic1](dynamic1.png)
+
+---
+
+### ./dynamic_analysis_dll
+
+![dynamic2](dynamic2.png)
+
+---
+
+### ./dynamic_analysis_dll
+
+Once in simple-dll.dll section, set breakpoint for exported functions
+
+Run and you will switch how it switch from simple-loader.exe to simple-dll.dll to execute function, value being passed and return back to the loader. 
+
+---
+
+### ./dynamic_analysis_dll
+
+![dynamic3](dynamic3.png)
 
 ---
 
