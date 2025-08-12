@@ -55,9 +55,9 @@ Shreethaar Arunagirinathan
 4. How DLL works 
 5. Create simple DLL 
 6. Structure of DLL 
-7. Static Analysis of DLL (IDA btw) 
-8. Dyanmic Analysis of DLL (x32dbg btw) 
-9. CTF Challenge review (bbctf btw) 
+7. Static Analysis of DLL 
+8. Dyanmic Analysis of DLL
+9. CTF Challenge Walkthrough 
 ---
 
 ### ./case_study
@@ -183,33 +183,42 @@ In windows the file extensions are as follows: Static libraries (.lib) and dynam
 
 [DLL Loading with Relative Addressing](https://excalidraw.com/#json=QSX9FTBqKW-Dk-h8LkWFW,12_4MgVhg96fA_Oo0sP99Q)
 
+[DLL Load Flow](https://excalidraw.com/#json=mqTlKH5ZxO9CqZfisPyEO,tMmpjCvoIDcyNkKeoqaleg)
+
 ---
 
 ### ./create_simple_dll 
-```c 
-// simple-dll.dll
+```c
+// simple-dll.c
 #include <windows.h>
 
 /* Export a very small function */
 __declspec(dllexport) int add(int a, int b) {
-    return a + b;
+    return a+b;
 }
-// DllMain as entrypoint 
+__declspec(dllexport) char* getString() {
+    static char buffer[] = "Hello from DLL";
+    return buffer;
+}
+__declspec(dllexport) void processData(char* input, int length) {
+    for(int i=0;i<length;i++) {
+        input[i]^=0x42;
+    }
+}
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
     switch (fdwReason) {        // perform actions based on the reason of calling 
-    case DLL_PROCESS_ATTACH:    // initialize once for each new process
-        break;
-
-    case DLL_THREAD_ATTACH:     // do thread-specific initialization
-        break;
-
-    case DLL_THREAD_DETACH:     // do thread-specific cleanup
-        break;
-
-    case DLL_PROCESS_DETACH:    // do not do cleanup if process termination scenario
-        break;
-    }
-    return TRUE;
+        case DLL_PROCESS_ATTACH:    // initialize once for each new process
+            OutputDebugStringA("DLL Loaded\n");
+            break;
+        case DLL_THREAD_ATTACH:     // do thread-specific initialization
+            break;
+        case DLL_THREAD_DETACH:     // do thread-specific cleanup
+            break;
+        case DLL_PROCESS_DETACH:    // do not do cleanup if process termination scenario
+        OutputDebugStringA("DLL Unloaded\n");
+            break;
+        }
+        return TRUE;
 }
 ```
 ---
@@ -219,20 +228,20 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 // simple-loader.c
 #include <windows.h>
 #include <stdio.h>
-
+#include <string.h>
 typedef int (*add_func_t)(int, int);
+typedef void (*processData_func_t)(char*, int);
 
 int main(void) {
+    char string[] = "Hello from EXE";
+    printf("%s\n", string);
     const char* dllName = "simple-dl.dll"; /* the DLL filename */
-
     HMODULE h = LoadLibraryA(dllName);
     if (!h) {
         DWORD err = GetLastError();
         printf("LoadLibraryA failed (error %lu). Make sure %s is in the same folder.\n", err, dllName);
         return 1;
     }
-
-    /* Get address of exported function "add" */
     add_func_t add = (add_func_t)GetProcAddress(h, "add");
     if (!add) {
         DWORD err = GetLastError();
@@ -240,13 +249,19 @@ int main(void) {
         FreeLibrary(h);
         return 1;
     }
-
-    /* Call it */
     int a = 7, b = 5;
     int result = add(a, b);
     printf("add(%d, %d) = %d\n", a, b, result);
 
-    /* Done */
+    processData_func_t processData = (processData_func_t)GetProcAddress(h, "processData");
+    if (!processData) {
+        printf("GetProcAddress for processData failed.\n");
+    } else {
+        char testData[] = "yappare is the best hacker\n";
+        printf("Original: %s\n", testData);
+        processData(testData, 6);
+        printf("Processed: %s\n", testData);
+    }
     FreeLibrary(h);
     return 0;
 }
@@ -298,9 +313,122 @@ dumpbin /imports loader.exe
 
 ### ./static_analysis_dll 
 
-
 ---
 
 ### ./dynamic_analysis_dll
 
 ---
+
+### ./ctf_challenge_walkthrough
+
+![ctf1](ctf1.png)
+
+---
+
+### ./ctf_challenge_walkthrough 
+
+![ctf2](ctf2.png)
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf3](ctf3.png) 
+
+---
+### ./ctf_challenge_walkthrough
+
+![ctf4](ctf4.png) 
+
+---
+
+<span style="font-size:14px;">
+
+### ./ctf_challenge_walkthrough
+
+**Key information derived from IDA:**
+1. Two exported functions: Run() and VoidFunc() 
+2. **VoidFunc()** contains WinAPI that retrieved something from resource section of the DLL
+3. v1 byte block (32-bit) passed to function **sub_6EB41648**
+4. In sub_6EB41648 function, contain XOR operation
+5. **while(v3)** loop is clearing **v0** which is EAX by replacing it will 0 (*v0 = 0)
+
+</span>
+
+---
+
+<span style="font-size:14px;">
+
+### ./ctf_challenge_walkthrough
+
+**Next step:**
+1. Run x32dbg with rundll32 (C:\Windows\SysWOW64\rundll32.exe)
+2. Command line: "C:\Windows\SysWOW64\rundll32.exe" C:\Users\flarevm\Desktop\RE-DLL\challenge\Helper.dll,VoidFunc
+3. Breakpoint before while loop and after sub_6EB41648 
+4. Inspect memory what is contained
+
+</span>
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf5](ctf5.png) 
+
+---
+
+### ./ctf_challenge_walkthrough 
+
+![ctf6](ctf6.png)
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf7](ctf7.png)
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf8](ctf8.png)
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf9](ctf9.png)
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf10](ctf10.png) 
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf11](ctf11.png) 
+
+---
+
+### ./ctf_challenge_walkthrough
+
+![ctf12](ctf12.png) 
+
+---
+
+### ./references 
+1. [Everything You Ever Wanted to Know about DLLs - CppCon](https://www.youtube.com/watch?v=JPQWQfDhICA)
+2. [Reversing DLLs - CactusCon](https://www.youtube.com/watch?v=ADWjaDhYR8k)
+3. [LoadLibraryA - MSDN](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibrarya)
+4. [GetProcAddress - MSDN](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getprocaddress) 
+5. [Thomas Roccia - Medium](https://blog.securitybreak.io/reverse-engineering-tip-analyzing-a-dll-in-x64dbg-b3005d516049) 
+
+---
+
+### ./the_end.sh 
+
+![meme](meme.png)
+
