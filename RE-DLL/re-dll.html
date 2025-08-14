@@ -43,8 +43,9 @@
 <li>Create simple DLL</li>
 <li>Structure of DLL</li>
 <li>Static Analysis of DLL</li>
-<li>Dyanmic Analysis of DLL</li>
-<li>CTF Challenge Walkthrough</li>
+<li>Dynamic Analysis of DLL</li>
+<li>CTF Challenge Walkthrough<br />
+Materials: <a href="https://github.com/shreethaar/RE-DLL">https://github.com/shreethaar/RE-DLL</a></li>
 </ol>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="4" data-paginate="true" data-background-color="#313045" data-color="white" data-theme="gaia" lang="en-US" data-marpit-pagination="4" style="--paginate:true;--background-color:#313045;--color:white;--theme:gaia;color:white;background-color:#313045;background-image:none;" data-marpit-pagination-total="37">
@@ -143,8 +144,8 @@
 __declspec(dllexport) <span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> {
     <span class="hljs-keyword">return</span> a + b;
 }
-__declspec(dllexport) <span class="hljs-type">void</span> <span class="hljs-title function_">getString</span><span class="hljs-params">()</span> {
-    MessageBoxA(<span class="hljs-literal">NULL</span>,<span class="hljs-string">&quot;Hello from DLL&quot;</span>,<span class="hljs-string">&quot;Weee MessageBox&quot;</span>,MB_OK)
+__declspec(dllexport) <span class="hljs-type">void</span> CALLBACK <span class="hljs-title function_">getString</span><span class="hljs-params">(HWND hwnd, HINSTANCE hinst, LPSTR cmdLine, <span class="hljs-type">int</span> nCmdShow)</span> {
+    MessageBoxA(hwnd, <span class="hljs-string">&quot;Hello from DLL&quot;</span>, <span class="hljs-string">&quot;getString()&quot;</span>, MB_OK | MB_ICONINFORMATION);
 }
 __declspec(dllexport) <span class="hljs-type">void</span> <span class="hljs-title function_">processData</span><span class="hljs-params">(<span class="hljs-type">char</span>* input, <span class="hljs-type">int</span> length)</span> {
     <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) {

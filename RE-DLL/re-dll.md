@@ -48,7 +48,6 @@ Shreethaar Arunagirinathan
 ---
 
 ### ./toc 
-
 1. Case study of SEO#LURKER campaign
 2. Why reversing DLL matters 
 3. What is DLL 
@@ -56,8 +55,10 @@ Shreethaar Arunagirinathan
 5. Create simple DLL 
 6. Structure of DLL 
 7. Static Analysis of DLL 
-8. Dyanmic Analysis of DLL
+8. Dynamic Analysis of DLL
 9. CTF Challenge Walkthrough 
+Materials: [https://github.com/shreethaar/RE-DLL](https://github.com/shreethaar/RE-DLL) 
+
 ---
 
 ### ./case_study
@@ -195,8 +196,8 @@ In windows the file extensions are as follows: Static libraries (.lib) and dynam
 __declspec(dllexport) int add(int a, int b) {
     return a + b;
 }
-__declspec(dllexport) void getString() {
-    MessageBoxA(NULL,"Hello from DLL","Weee MessageBox",MB_OK)
+__declspec(dllexport) void CALLBACK getString(HWND hwnd, HINSTANCE hinst, LPSTR cmdLine, int nCmdShow) {
+    MessageBoxA(hwnd, "Hello from DLL", "getString()", MB_OK | MB_ICONINFORMATION);
 }
 __declspec(dllexport) void processData(char* input, int length) {
     for (int i = 0; i < length; i++) {
