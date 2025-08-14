@@ -474,7 +474,8 @@ Run and you will switch how it switch from simple-loader.exe to simple-dll.dll t
 3. [LoadLibraryA - MSDN](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibrarya)
 4. [GetProcAddress - MSDN](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getprocaddress) 
 5. [Thomas Roccia - Medium](https://blog.securitybreak.io/reverse-engineering-tip-analyzing-a-dll-in-x64dbg-b3005d516049) 
-
+6. [Passing arguments via rundll32.exe to function exported by DLL](https://stmxcsr.com/micro/rundll-parse-args.html)
+7. [Exporing DLLs Through Creation and Reversing](https://0x251e.github.io/posts/exploring-dlls-through-creation-reversing-malware-analysis/)
 ---
 
 ### ./the_end.sh 
